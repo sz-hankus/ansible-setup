@@ -1,0 +1,26 @@
+# A basic setup of a new user
+---
+- name: "Add a new user - {{ username }}"
+  become: true
+  ansible.builtin.user:
+    state: present
+    name: "{{ username }}"
+    shell: /bin/bash
+    create_home: true
+    password: "{{ 'abc' | password_hash('sha512', 'mysecretsalt') }}"
+    update_password: always
+
+- name: "Add the new user to /etc/sudoers ({{ username }})"
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/sudoers"
+    state: present
+    line: "{{ username }} ALL=(ALL:ALL) ALL"
+    validate: "visudo -cf %s"
+
+- name: Add an authorized SSH public key
+  become: true
+  ansible.posix.authorized_key:
+    state: present
+    user: "{{ username }}"
+    key: "{{ lookup('file', ssh_public_key_path) }}"  # path defined in group_vars

@@ -1,0 +1,19 @@
+# Setup up SSHD options and reload the service
+---
+- name: Configure SSHD
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: "^#?PasswordAuthentication", line: "PasswordAuthentication no"}
+    - { regexp: "^#?PermitRootLogin", line: "PermitRootLogin no"}
+    - { regexp: "^#?Port", line: "Port {{ ssh_port }}"}
+
+- name: Reload the SSHD service
+  become: true
+  ansible.builtin.systemd:
+    state: reloaded
+    name: sshd

@@ -1,0 +1,5 @@
+- name: User setup
+  include_tasks: user.yml
+
+- name: SSHD setup
+  include_tasks: ssh.yml

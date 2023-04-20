@@ -1,0 +1,23 @@
+# Setup my personal work environment
+---
+- name: Install necessary packages
+  become: true
+  ansible.builtin.package:
+    name:
+      - git
+      - stow
+      - acl  # used for becoming an unpriviledged user (https://github.com/georchestra/ansible/issues/55#issuecomment-588313638)
+      - vim
+      - neovim
+      - fish
+      - ranger
+    state: present
+
+- name: Clone a 'dotfiles' repository
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "/home/{{ username }}/dotfiles"
+    recursive: false
+    force: true

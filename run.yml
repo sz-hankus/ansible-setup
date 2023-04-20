@@ -1,0 +1,8 @@
+#  A simple ansible playbook for setting up a new server
+#  Author: Szymon Hankus
+---
+- name: A basic setup
+  hosts: all
+  roles:
+    - system_conf
+    - personal_setup
