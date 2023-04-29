@@ -7,7 +7,7 @@
     name: "{{ username }}"
     shell: /bin/bash
     create_home: true
-    password: "{{ 'abc' | password_hash('sha512', 'mysecretsalt') }}"
+    password: "{{ vault_password | password_hash('sha512','somesalt') }}"
     update_password: always
 
 - name: "Add the new user to /etc/sudoers ({{ username }})"

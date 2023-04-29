@@ -1,5 +1,0 @@
-username: szymon
-ssh_port: 69
-ssh_public_key_path: ~/.ssh/id_ed25519.pub
-
-dotfiles_repo: https://github.com/sz-hankus/dotfiles.git

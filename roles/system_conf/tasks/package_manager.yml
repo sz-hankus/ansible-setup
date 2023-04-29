@@ -1,0 +1,13 @@
+# Native package manager stuff. Currently only updates the cache
+---
+- name: Update apt cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: ansible_distribution|lower in ['debian', 'ubuntu']
+
+- name: Update dnf cache
+  become: true
+  ansible.builtin.dnf:
+    update_cache: true
+  when: ansible_distribution|lower in ['fedora', 'centos', 'redhat']

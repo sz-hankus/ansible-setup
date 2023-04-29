@@ -1,5 +1,9 @@
+---
 - name: User setup
-  include_tasks: user.yml
+  ansible.builtin.include_tasks: user.yml
 
 - name: SSHD setup
-  include_tasks: ssh.yml
+  ansible.builtin.include_tasks: ssh.yml
+
+- name: Package manager setup
+  ansible.builtin.include_tasks: package_manager.yml

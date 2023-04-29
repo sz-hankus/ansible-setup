@@ -1,4 +1,4 @@
-# Setup up SSHD options and reload the service
+# Setup up SSHD options and reload the service (if changes were made)
 ---
 - name: Configure SSHD
   become: true
@@ -11,9 +11,11 @@
     - { regexp: "^#?PasswordAuthentication", line: "PasswordAuthentication no"}
     - { regexp: "^#?PermitRootLogin", line: "PermitRootLogin no"}
     - { regexp: "^#?Port", line: "Port {{ ssh_port }}"}
+  register: sshd_status
 
-- name: Reload the SSHD service
+- name: Reload the SSHD service (when sshd_config changed)
   become: true
+  when: sshd_status.changed
   ansible.builtin.systemd:
     state: reloaded
     name: sshd

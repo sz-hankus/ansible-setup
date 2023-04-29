@@ -3,14 +3,7 @@
 - name: Install necessary packages
   become: true
   ansible.builtin.package:
-    name:
-      - git
-      - stow
-      - acl  # used for becoming an unpriviledged user (https://github.com/georchestra/ansible/issues/55#issuecomment-588313638)
-      - vim
-      - neovim
-      - fish
-      - ranger
+    name: "{{ packages }}"
     state: present
 
 - name: Clone a 'dotfiles' repository
